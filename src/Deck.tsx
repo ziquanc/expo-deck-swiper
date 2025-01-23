@@ -6,7 +6,7 @@ const SWIPE_THRESHOLD = 120;
 const ROTATION_RANGE = 10;
 const DOUBLE_TAP_DELAY = 300;
 
-export function DeckSwiper<T extends BaseItem>({
+const DeckSwiper = <T extends BaseItem>({
   data,
   renderCard,
   onSwipeLeft,
@@ -23,7 +23,8 @@ export function DeckSwiper<T extends BaseItem>({
   backCardStyle,
   overlayContainerStyle,
   renderAheadCount = 2,
-}: DeckSwiperProps<T>) {
+  allowedDirections = ["left", "right", "up", "down"],
+}: DeckSwiperProps<T>) => {
   const [cards, setCards] = useState<T[]>(data);
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = useRef(new Animated.ValueXY()).current;
@@ -90,7 +91,11 @@ export function DeckSwiper<T extends BaseItem>({
           Math.abs(gesture.dy) > SWIPE_THRESHOLD
         ) {
           const direction = getSwipeDirection(gesture);
-          handleSwipe(direction);
+          if (direction) {
+            handleSwipe(direction);
+          } else {
+            resetPosition();
+          }
         } else {
           if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5) {
             handleTap();
@@ -103,11 +108,13 @@ export function DeckSwiper<T extends BaseItem>({
 
   const getSwipeDirection = (
     gesture: any
-  ): "left" | "right" | "up" | "down" => {
+  ): "left" | "right" | "up" | "down" | null => {
     if (Math.abs(gesture.dx) > Math.abs(gesture.dy)) {
-      return gesture.dx > 0 ? "right" : "left";
+      const direction = gesture.dx > 0 ? "right" : "left";
+      return allowedDirections.includes(direction) ? direction : null;
     } else {
-      return gesture.dy > 0 ? "down" : "up";
+      const direction = gesture.dy > 0 ? "down" : "up";
+      return allowedDirections.includes(direction) ? direction : null;
     }
   };
 
@@ -172,9 +179,15 @@ export function DeckSwiper<T extends BaseItem>({
     if (dragDistance < DRAG_THRESHOLD) return null;
 
     if (Math.abs(lastGesture.dx) > Math.abs(lastGesture.dy)) {
-      return lastGesture.dx > 0 ? overlayLabels?.right : overlayLabels?.left;
+      const direction = lastGesture.dx > 0 ? "right" : "left";
+      return allowedDirections.includes(direction)
+        ? overlayLabels?.[direction]
+        : null;
     } else {
-      return lastGesture.dy > 0 ? overlayLabels?.down : overlayLabels?.up;
+      const direction = lastGesture.dy > 0 ? "down" : "up";
+      return allowedDirections.includes(direction)
+        ? overlayLabels?.[direction]
+        : null;
     }
   };
 
@@ -208,7 +221,7 @@ export function DeckSwiper<T extends BaseItem>({
         })}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -242,3 +255,5 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
 });
+
+export default DeckSwiper;

@@ -1,5 +1,5 @@
 import React from "react";
-import { DeckSwiper } from "../src/Deck";
+import { DeckSwiper } from "expo-deck-swiper";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 const data = [

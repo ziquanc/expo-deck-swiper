@@ -1,2 +1,3 @@
-export { DeckSwiper } from "../components/Deck";
-export type { DeckSwiperProps } from "../components/DeckSwiperProps";
+export { default as DeckSwiper } from "./Deck";
+export type { DeckSwiperProps } from "./DeckSwiperProps";
+export type { SwipeCallback, OverlayLabels, DeckSwiperStyles } from "./types";
