@@ -1,50 +1,134 @@
-# Welcome to your Expo app 👋
+# Expo Deck Swiper
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A highly customizable and performant deck swiper component for React Native and Expo, featuring smooth animations, gesture controls, and extensive customization options.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 👆 Smooth swipe gestures (left, right, up, down)
+- 🎯 Single and double tap support
+- 🎨 Customizable overlay labels for swipe directions
+- 💅 Flexible styling options for cards and container
+- 🔄 Card recycling for optimal performance
+- 📱 Built for React Native and Expo
+- 📦 TypeScript support
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Installation
 
 ```bash
-npm run reset-project
+npm install expo-deck-swiper
+# or
+yarn add expo-deck-swiper
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+This package requires the following peer dependencies:
 
-## Learn more
+```json
+{
+  "react": ">=16.8.0",
+  "react-native": ">=0.60.0",
+  "react-native-gesture-handler": ">=2.0.0",
+  "react-native-reanimated": ">=2.0.0"
+}
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Basic Usage
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```tsx
+import { DeckSwiper } from "expo-deck-swiper";
 
-## Join the community
+const data = [
+  { id: "1", name: "Card 1" },
+  { id: "2", name: "Card 2" },
+];
 
-Join our community of developers creating universal apps.
+export default function App() {
+  return (
+    <DeckSwiper
+      data={data}
+      renderCard={(item) => (
+        <View style={styles.card}>
+          <Text>{item.name}</Text>
+        </View>
+      )}
+      onSwipeLeft={(item) => console.log("Swiped left:", item)}
+      onSwipeRight={(item) => console.log("Swiped right:", item)}
+    />
+  );
+}
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Props
+
+### Required Props
+
+| Prop         | Type                           | Description                            |
+| ------------ | ------------------------------ | -------------------------------------- |
+| `data`       | `T[]`                          | Array of items to be rendered as cards |
+| `renderCard` | `(item: T) => React.ReactNode` | Function to render individual cards    |
+
+### Optional Props
+
+| Prop                    | Type               | Description                                        |
+| ----------------------- | ------------------ | -------------------------------------------------- |
+| `onSwipeLeft`           | `SwipeCallback<T>` | Callback when card is swiped left                  |
+| `onSwipeRight`          | `SwipeCallback<T>` | Callback when card is swiped right                 |
+| `onSwipeUp`             | `SwipeCallback<T>` | Callback when card is swiped up                    |
+| `onSwipeDown`           | `SwipeCallback<T>` | Callback when card is swiped down                  |
+| `onSingleTap`           | `SwipeCallback<T>` | Callback for single tap on card                    |
+| `onDoubleTap`           | `SwipeCallback<T>` | Callback for double tap on card                    |
+| `onDragStart`           | `SwipeCallback<T>` | Callback when card drag starts                     |
+| `onDragEnd`             | `SwipeCallback<T>` | Callback when card drag ends                       |
+| `overlayLabels`         | `OverlayLabels`    | Custom overlay components for each swipe direction |
+| `containerStyle`        | `ViewStyle`        | Style for the container component                  |
+| `cardStyle`             | `ViewStyle`        | Style for the card component                       |
+| `backCardStyle`         | `ViewStyle`        | Style for the card behind the top card             |
+| `overlayContainerStyle` | `ViewStyle`        | Style for the overlay container                    |
+| `renderAheadCount`      | `number`           | Number of cards to render ahead (default: 2)       |
+
+## Advanced Usage
+
+### Custom Overlay Labels
+
+```tsx
+<DeckSwiper
+  data={data}
+  renderCard={renderCard}
+  overlayLabels={{
+    left: <Text style={{ color: "red" }}>NOPE</Text>,
+    right: <Text style={{ color: "green" }}>LIKE</Text>,
+    up: <Text style={{ color: "blue" }}>SUPER LIKE</Text>,
+    down: <Text style={{ color: "orange" }}>MAYBE</Text>,
+  }}
+/>
+```
+
+### Custom Styling
+
+```tsx
+<DeckSwiper
+  data={data}
+  renderCard={renderCard}
+  containerStyle={{
+    backgroundColor: "#f5f5f5",
+    padding: 10,
+  }}
+  cardStyle={{
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  }}
+  backCardStyle={{
+    opacity: 0.7,
+    transform: [{ scale: 0.9 }],
+  }}
+/>
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT
