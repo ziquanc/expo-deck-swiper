@@ -1,7 +1,12 @@
 {
   "name": "expo-deck-swiper",
-  "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "description": "A customizable deck swiper component for React Native and Expo",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -9,11 +14,37 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "jest": {
     "preset": "jest-expo"
   },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=2.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "deck-swiper",
+    "card-swiper",
+    "swipe",
+    "gesture"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziquanc/expo-deck-swiper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ziquanc/expo-deck-swiper/issues"
+  },
+  "homepage": "https://github.com/ziquanc/expo-deck-swiper#readme",
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
