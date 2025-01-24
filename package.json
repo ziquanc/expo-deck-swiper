@@ -1,6 +1,6 @@
 {
   "name": "expo-deck-swiper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A customizable deck swiper component for React Native and Expo",
   "main": "src/index.ts",
   "sideEffects": false,
