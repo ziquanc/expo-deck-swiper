@@ -2,11 +2,8 @@
   "name": "expo-deck-swiper",
   "version": "0.0.1",
   "description": "A customizable deck swiper component for React Native and Expo",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "main": "src/index.ts",
+  "sideEffects": false,
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
